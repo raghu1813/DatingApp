@@ -30,6 +30,7 @@ namespace DatingApp.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetValue(int id)
         {
+            
             var value = _context.Values.FirstOrDefault(x => x.Id == id);
             return Ok(value);
         }
