@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace DatingApp.Models
 {
     public class User
@@ -6,6 +9,18 @@ namespace DatingApp.Models
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public string Gender { get; set; }
+        public DateTime DateofBirth { get; set; }
+        public string KnownAs { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime LastActive { get; set; }
+        public string Intriduction { get; set; }
+        public string LookingFor { get; set; }
+        public string Interests { get; set; }
+        public ICollection<Photo> Photos { get; set; }
+
+
+
 
     }
 }
