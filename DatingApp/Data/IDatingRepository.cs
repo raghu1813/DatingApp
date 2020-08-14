@@ -1,4 +1,5 @@
-﻿using DatingApp.Models;
+﻿using DatingApp.Helpers;
+using DatingApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,9 @@ namespace DatingApp.Data
         Task<bool> SaveAll();
         Task<Photo> GetPhoto(int id);
         Task<Photo> GetMainPhotoForUser(int userId);
-        Task<IEnumerable<User>> GetUsers();
+        Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id);
+        Task<Like> GetLike(int userId, int recipientId);
 
     }
 }

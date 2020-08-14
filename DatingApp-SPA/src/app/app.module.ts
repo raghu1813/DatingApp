@@ -14,10 +14,12 @@ import { RegisterComponent } from './register/register.component';
 import {ErrorInterceptorProvider} from './_services/error. interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {TimeagoModule} from 'ngx-timeago';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { MemberListComponent } from './members/member-list/member-list.component';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import {appRoutes} from './routes';
@@ -29,6 +31,7 @@ import {MemberDetailResolver} from './_resolvers/member-detailed.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import {MemberEditResolver} from './_resolvers/member-edit.resolver';
 import {PreventUnsavedChanges} from './_gaurds/prevent-unsaved-changes.guard';
+import {ListsResolver} from './_resolvers/lists.resolver';
 
 
 
@@ -49,7 +52,7 @@ export function tokenGetter() {
       MemberCardComponent,
       MemberDetailedComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
    ],
    imports: [
       BrowserModule,
@@ -59,9 +62,12 @@ export function tokenGetter() {
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       BsDatepickerModule.forRoot(),
+      ButtonsModule.forRoot(),
+      PaginationModule.forRoot(),
       TabsModule.forRoot(),
       NgxGalleryModule,
       FileUploadModule,
+      TimeagoModule.forRoot(),
       ReactiveFormsModule,
       RouterModule.forRoot(appRoutes),
       JwtModule.forRoot({
@@ -78,7 +84,8 @@ export function tokenGetter() {
       MemberDetailResolver,
       MemberListResolver,
       MemberEditResolver,
-      PreventUnsavedChanges
+      PreventUnsavedChanges,
+      ListsResolver
    ],
    bootstrap: [
       AppComponent
