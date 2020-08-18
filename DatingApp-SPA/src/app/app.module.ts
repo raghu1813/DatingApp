@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import {RouterModule} from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 import {ErrorInterceptorProvider} from './_services/error. interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {ModalModule} from 'ngx-bootstrap/modal';
 import {TimeagoModule, TimeagoPipe} from 'ngx-timeago';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
@@ -34,7 +35,14 @@ import {PreventUnsavedChanges} from './_gaurds/prevent-unsaved-changes.guard';
 import {ListsResolver} from './_resolvers/lists.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { MessagesResolver } from './_resolvers/messages.resolver';
-
+import {AdminPanelComponent} from './admin/admin-panel/admin-panel.component';
+import {HasRoleDirective} from './_directives/hasRole.directive';
+import {PhotoManagementComponent} from './admin/photo-management/photo-management.component';
+import {UserManagementComponent} from './admin/user-management/user-management.component';
+import {AdminService} from './_services/admin.service';
+import { environment } from 'src/environments/environment';
+import { User } from './_models/user';
+import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -54,7 +62,12 @@ export function tokenGetter() {
       MemberDetailedComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      MemberMessagesComponent
+      MemberMessagesComponent,
+      AdminPanelComponent,
+      HasRoleDirective,
+      UserManagementComponent,
+      PhotoManagementComponent,
+      RolesModalComponent
    ],
    imports: [
       BrowserModule,
@@ -65,6 +78,7 @@ export function tokenGetter() {
       BsDropdownModule.forRoot(),
       BsDatepickerModule.forRoot(),
       ButtonsModule.forRoot(),
+      ModalModule.forRoot(),
       PaginationModule.forRoot(),
       TabsModule.forRoot(),
       NgxGalleryModule,
@@ -89,9 +103,39 @@ export function tokenGetter() {
       PreventUnsavedChanges,
       ListsResolver,
       MessagesResolver,
+      AdminService
+   ],
+   entryComponents:[
+      RolesModalComponent
    ],
    bootstrap: [
       AppComponent
    ]
 })
-export class AppModule { }
+export class AppModule {
+   baseUrl = environment.apiUrl;
+
+   constructor(private http: HttpClient) {}
+ 
+   getUsersWithRoles() {
+     return this.http.get(this.baseUrl + 'admin/userswithroles');
+   }
+ 
+   updateUserRoles(user: User, roles: {}) {
+     return this.http.post(this.baseUrl + 'admin/editRoles/' + user.username, roles);
+   }
+ 
+   getPhotosForApproval() {
+     return this.http.get(this.baseUrl + 'admin/photosForModeration');
+   }
+ 
+   approvePhoto(photoId) {
+     return this.http.post(this.baseUrl + 'admin/approvePhoto/' + photoId, {});
+   }
+ 
+   rejectPhoto(photoId) {
+     return this.http.post(this.baseUrl + 'admin/rejectPhoto/' + photoId, {});
+   }  
+
+
+ }

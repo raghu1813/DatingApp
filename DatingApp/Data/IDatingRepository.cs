@@ -15,7 +15,7 @@ namespace DatingApp.Data
         Task<Photo> GetPhoto(int id);
         Task<Photo> GetMainPhotoForUser(int userId);
         Task<PagedList<User>> GetUsers(UserParams userParams);
-        Task<User> GetUser(int id);
+        Task<User> GetUser(int id, bool isCurrentUser);
         Task<Like> GetLike(int userId, int recipientId);
         Task<Message> GetMessage(int id);
         Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams);

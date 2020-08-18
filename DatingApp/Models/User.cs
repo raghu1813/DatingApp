@@ -1,14 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
 namespace DatingApp.Models
 {
-    public class User
+    public class User : IdentityUser<int>
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+      
         public string Gender { get; set; }
         public DateTime DateofBirth { get; set; }
         public string KnownAs { get; set; }
@@ -24,6 +22,7 @@ namespace DatingApp.Models
         public virtual ICollection<Like> Likees { get; set; }
         public virtual ICollection<Message> MessagesSent { get; set; }
         public virtual ICollection<Message> MessagesReceived { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
 
 
 

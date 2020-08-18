@@ -15,4 +15,5 @@ export interface User {
   intriduction?: string;
   lookingFor?: string;
   photos?: Photo[];
+  roles?: string[];
 }
